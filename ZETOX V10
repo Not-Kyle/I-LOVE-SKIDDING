@@ -1,3 +1,15 @@
+
+local Players, RStorage, RService, TPService, TweenService, HttpService, SGui = game:GetService("Players"),game:GetService("ReplicatedStorage"),game:GetService("RunService"),game:GetService("TeleportService"), game:GetService("TweenService"), game:GetService("HttpService"), game:GetService("StarterGui")
+local Client, Mouse = Players.LocalPlayer, Players.LocalPlayer:GetMouse();local LocalP = function() return Client.Character or Client.CharacterAdded:Wait() end
+local Camera, CordCamera, CurCamera = workspace.CurrentCamera, workspace.CurrentCamera.CoordinateFrame, workspace.CurrentCamera;
+local CF, UD, UD2, INew, Vec3, NColor3 = CFrame.new, UDim.new, UDim2.new, Instance.new, Vector3.new, Color3.fromRGB;
+local ClickCheck, M1Held, Keyheld, BToggle, CanShoot, SelectingTarget, ColorGlock, ColorShotty = false, false, false, false, false, false, false, false
+local Blink, FirstFly, Flying, Animating, Visualizing, Teleporting, Equipped, debounce, JumpingStateDebounce, RunSpeeding, Spying, Spamming = false, false, false, false, false, false, false, false, false, false, false, false, false
+local Infjump, Noclip, ItemEsp, Airwalk, Aimbot, Aimlock, Camlock, GlockFollowing, ShottyFollow CashFarming, TPBypass, Feloop, Noslow, Attacked, Flinging, AntiFe, FeVan = false, false, false, false, false, false, nil, false, false, false, false, false, false, false, false, false, false
+local FSpeed, BSpeed, TPSpeed, XSet, YSet, ZSet, OSet, X,Y,Z, x,y,z, AV, SpamDelay = 7, 3, 2, 88,77,66,5, 0, 0, 0, 0, 0, 0, 10, 2;local Legitmode = false
+local FlyKey, NoClipKey, TrashTalkKey, ResetKey, AVUpKey, AVDownKey, BuyUziKey, BuyAmmoKey, BuyGlockKey, BuyFoodKey, LockOnKey, ShootLockedKey, AimPart, CamPart, BlinkKey, AimMode = "F","X","T","P","K","L","U","R","G","B","Q","E","Torso","Torso","LeftShift","New";
+local WSvalue, JPvalue, CSvalue = 16, 37.5, 8   --SKIDDED FROM MIKOWARE!! HEHWGWGWGWHGEWRHEHHER I LOVE SKIDDING
+
 local Players, RService, RStorage, Uis, TweenService, TPService = game:GetService("Players"), game:GetService("RunService"), game:GetService("ReplicatedStorage"), game:GetService("UserInputService"), game:GetService("TweenService"), game:GetService("TeleportService");
 local LocalP, Mouse = Players.LocalPlayer, Players.LocalPlayer:GetMouse()
 local Chat, Mute, UD, UD2, Vec3, Vec2, INew, CordCamera, CF = RStorage.DefaultChatSystemChatEvents.SayMessageRequest, RStorage.DefaultChatSystemChatEvents.MutePlayerRequest, UDim.new, UDim2.new, Vector3.new, Vector2.new, Instance.new, workspace.CurrentCamera.CoordinateFrame, CFrame.new
@@ -879,7 +891,6 @@ SawTP_Box.MouseButton1Down:Connect(function()
 end)
 
 Aimbot_Box.MouseButton1Down:Connect(function()
-if game.PlaceId ~= 4669040 then
 Notify("ZETOX", "Aimlock, Press E by someone and it shoots them until they die", "", 3)
 local workspace = game:GetService("Workspace")
 local mouse = LocalP:GetMouse()
@@ -903,7 +914,6 @@ getgenv().MBotPlayer = function(Player)
 end
 end
 end)
-end
 end)
 SawTP_Box_2.MouseButton1Down:Connect(function()
     TPService:Teleport(game.PlaceId, LocalP)
@@ -1267,8 +1277,20 @@ local Players, Uis, RService = game:GetService"Players", game:GetService"UserInp
 local Client, CF, Vec3 = Players.LocalPlayer, CFrame.new, Vector3.new;
 local Blink, BlinkSpeed, KeyHeld, tableConcatenate = false, 2, false, table.concat;
 local Noseats = false;
+local CamPart = nil;
+local ViewTarget = nil;
+local CamlockTarget = nil;
+local Viewing = false;
+local Camlock = false;
 
-
+getgenv().SearchPlayers = function(Name)
+    local Inserted = {}
+        for _, p in pairs(game:GetService("Players"):GetPlayers()) do 
+        if string.lower(string.sub(p.DisplayName, 1, string.len(Name))) == string.lower(Name) then 
+            table.insert(Inserted, p);return p
+        end
+    end
+end
 
 
 getgenv().GetInit = function(CName)
@@ -1457,4 +1479,190 @@ Commands["Rejoin"] = {
     ["Function"] = function()
         TPService:Teleport(game.PlaceId, Client)
     end
+}
+
+Commands["View a Player"] = {
+    ["Aliases"] = {"view"};
+    ["Function"] = function(Args)
+        if Args[1] then 
+            ViewTarget = SearchPlayers(Args[1]);Viewing = true 
+        end
+        Notify("ZETOX V10", "View Target - "..tostring(ViewTarget), "", 3)
+    end
+}
+Commands["UnView Viewed Target"] = {
+    ["Aliases"] = {"unview"};
+    ["Function"] = function()
+        ViewTarget = nil;Viewing = false
+        Camera.CameraSubject = Client.Character
+        Notify("ZETOX V10", "Viewing - "..tostring(Viewing), "", 3)
+    end
+}
+
+Commands["Sets Camlock Target"] = {
+    ["Aliases"] = {"camlock","cl"};
+    ["Function"] = function(Args)
+        if Args[1] then 
+            CamlockTarget = SearchPlayers(Args[1]);Camlock = true
+        end
+        Notify("ZETOX 10", "Camlock Target - "..tostring(CamlockTarget), "", 3)
+    end
+}
+Commands["UnCamlocks Camlocked Target"] = {
+    ["Aliases"] = {"uncamlock", "uncl"};
+    ["Function"] = function()
+        CamlockTarget = nil;Camlock = false 
+        Notify("ZETOX V10", "Camlock - "..tostring(Camlock), "", 3)
+    end
+}
+
+RService.Stepped:Connect(function()
+    if Camlock == true and CamlockTarget and CamlockTarget.Character and CamlockTarget.Character:FindFirstChild(CamPart) then 
+        Camera.CoordinateFrame = CF(Camera.CoordinateFrame.p, CF(CamlockTarget.Character[CamPart].Position).p)
+    end
+     if Viewing == true and ViewTarget ~= nil then 
+        Camera.CameraSubject = ViewTarget.Character
+     end
+    if Noclip == true then 
+        for i = 1, #Client.Character:GetChildren() do
+            local CG = Client.Character:GetChildren()[i]
+            if CG:IsA("BasePart") then 
+                CG.CanCollide = false 
+            end
+        end
+    end
+end)
+
+getgenv().Items = function(Target, Item)
+    if Target.Backpack:FindFirstChild(Item) or Target.Character:FindFirstChild(Item) then
+        return "(Yes)"
+    else
+        return "(No)"
+    end
+end
+
+getgenv().Values = function(Target)
+    if not Target.Character:FindFirstChild("ForceField") then 
+        return "(No)"
+    elseif Target.Character:FindFirstChild("ForceField") then 
+        return "(Yes)"
+    end
+end
+
+getgenv().Clips = function(Target)
+    if not Target.Character:FindFirstChildWhichIsA("Tool") then 
+        return 
+    elseif Target.Character:FindFirstChildWhichIsA("Tool") then 
+        return Target.Character:FindFirstChildWhichIsA("Tool").Clips.Value
+    end
+end
+
+getgenv().Ammo = function(Target)
+    if not Target.Character:FindFirstChildWhichIsA("Tool") then 
+        return 
+    elseif Target.Character:FindFirstChildWhichIsA("Tool") then 
+        return Target.Character:FindFirstChildWhichIsA("Tool").Ammo.Value
+    end
+end
+
+
+getgenv().EspPlayer = function(Dude)
+    local bgui = Instance.new("BillboardGui", Dude.Character.Head)
+    local tlabel = Instance.new("TextLabel", bgui)
+
+    bgui.Name = "ESP"
+    bgui.Adornee = part
+    bgui.AlwaysOnTop = true
+    bgui.ExtentsOffset = Vector3.new(0, 3, 0)
+    bgui.Size = UDim2.new(0, 5, 0, 5)
+
+    tlabel.Name = "espTarget"
+    tlabel.BackgroundColor3 = Color3.new(255, 0, 255)
+    tlabel.BackgroundTransparency = 1
+    tlabel.BorderSizePixel = 0
+    tlabel.Position = UDim2.new(0, 0, 0, -30)
+    tlabel.Size = UDim2.new(1, 0, 7, 0)
+    tlabel.Visible = true
+    tlabel.ZIndex = 10
+    tlabel.Font = "ArialBold"
+    tlabel.FontSize = "Size18"
+    RService.RenderStepped:Connect(function()
+        if Dude and Dude.Character and Dude.Character:FindFirstChildOfClass("Humanoid") then 
+            tlabel.Text = Dude.DisplayName.." | Health: (".. math.floor((Dude.Character.Humanoid.Health)).."/"..math.floor((Dude.Character.Humanoid.MaxHealth))..") | ForceFielded: "..Values(Dude, "ForceField").." | Glock: "..Items(Dude,"Glock").." | Shotty: "..Items(Dude, "Shotty").." | Vest: "..Items(Dude, "BulletResist")
+        end
+    end)
+    local h = Instance.new("Highlight", Dude.Character)
+    h.FillTransparency = 1 
+    h.OutlineColor = Color3.fromRGB(255,140,0)
+    h.OutlineTransparency = 0 
+    h.Name = "ZetoxESP"
+    tlabel.TextColor = BrickColor.new("White") 
+    tlabel.TextStrokeTransparency = 0.5
+
+    Dude.CharacterAdded:Connect(function()
+        wait(0.2)
+        local bgui = Instance.new("BillboardGui", Dude.Character.Head)
+        local tlabel = Instance.new("TextLabel", bgui)
+
+        bgui.Name = "ESP"
+        bgui.Adornee = part
+        bgui.AlwaysOnTop = true
+        bgui.ExtentsOffset = Vector3.new(0, 3, 0)
+        bgui.Size = UDim2.new(0, 5, 0, 5)
+
+        tlabel.Name = "espTarget"
+        tlabel.BackgroundColor3 = Color3.new(255, 255, 255)
+        tlabel.BackgroundTransparency = 1
+        tlabel.BorderSizePixel = 0
+        tlabel.Position = UDim2.new(0, 0, 0, -30)
+        tlabel.Size = UDim2.new(1, 0, 7, 0)
+        tlabel.Visible = true
+        tlabel.ZIndex = 10
+        tlabel.Font = "ArialBold"
+        tlabel.FontSize = "Size18"
+        RService.RenderStepped:Connect(function()
+            if Dude and Dude.Character and Dude.Character:FindFirstChildOfClass("Humanoid") then 
+                tlabel.Text = Dude.Name.."  | Health: (".. math.floor((Dude.Character.Humanoid.Health))..")".." | ForceFielded: "..Values(Dude, "ForceField").." | Glock: "..Items(Dude,"Glock").." | Shotty: "..Items(Dude, "Shotty").." | Vest: "..Items(Dude, "BulletResist")
+            end
+        end)
+        local h = Instance.new("Highlight", Dude.Character)
+        h.FillTransparency = 1 
+        h.OutlineColor = Color3.fromRGB(255,140,0)
+        h.OutlineTransparency = 0 
+        h.Name = "ZetoxESP"
+        tlabel.TextColor = BrickColor.new("White") 
+        tlabel.TextStrokeTransparency = 0.5
+    end)
+end
+
+local plr = game.Players.LocalPlayer
+repeat wait() until plr.Character
+local char = plr.Character
+
+Commands["Esp a Player"] = {
+    ["Aliases"] = {"esp", "find"};
+    ["Function"] = function(Args)
+        if Args[1] then
+            EspTarget = SearchPlayers(Args[1])
+            if EspTarget then
+                EspPlayer(EspTarget)
+            end
+        end
+        Notify("ZETOX V10", "Esp Target: "..tostring(EspTarget), "", 3)
+    end
+}
+Commands["UnEsp Esp'd Player"] = {
+    ["Aliases"] = {"unesp", "unfind"};
+    ["Function"] = function(Args)
+        if Args[1] then 
+			local UnEspPlayer;UnEspPlayer = SearchPlayers(Args[1])
+			if UnEspPlayer then 
+				for _, v in next, UnEspPlayer.Character:GetDescendants() do 
+					if v:IsA("BillboardGui") or v:IsA("TextLabel") or v:IsA("Highlight") then 
+						v:Destroy() 
+					end
+				end
+			end
+		end
+	end
 }
