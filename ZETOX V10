@@ -1,15 +1,4 @@
 
-local Players, RStorage, RService, TPService, TweenService, HttpService, SGui = game:GetService("Players"),game:GetService("ReplicatedStorage"),game:GetService("RunService"),game:GetService("TeleportService"), game:GetService("TweenService"), game:GetService("HttpService"), game:GetService("StarterGui")
-local Client, Mouse = Players.LocalPlayer, Players.LocalPlayer:GetMouse();local LocalP = function() return Client.Character or Client.CharacterAdded:Wait() end
-local Camera, CordCamera, CurCamera = workspace.CurrentCamera, workspace.CurrentCamera.CoordinateFrame, workspace.CurrentCamera;
-local CF, UD, UD2, INew, Vec3, NColor3 = CFrame.new, UDim.new, UDim2.new, Instance.new, Vector3.new, Color3.fromRGB;
-local ClickCheck, M1Held, Keyheld, BToggle, CanShoot, SelectingTarget, ColorGlock, ColorShotty = false, false, false, false, false, false, false, false
-local Blink, FirstFly, Flying, Animating, Visualizing, Teleporting, Equipped, debounce, JumpingStateDebounce, RunSpeeding, Spying, Spamming = false, false, false, false, false, false, false, false, false, false, false, false, false
-local Infjump, Noclip, ItemEsp, Airwalk, Aimbot, Aimlock, Camlock, GlockFollowing, ShottyFollow CashFarming, TPBypass, Feloop, Noslow, Attacked, Flinging, AntiFe, FeVan = false, false, false, false, false, false, nil, false, false, false, false, false, false, false, false, false, false
-local FSpeed, BSpeed, TPSpeed, XSet, YSet, ZSet, OSet, X,Y,Z, x,y,z, AV, SpamDelay = 7, 3, 2, 88,77,66,5, 0, 0, 0, 0, 0, 0, 10, 2;local Legitmode = false
-local FlyKey, NoClipKey, TrashTalkKey, ResetKey, AVUpKey, AVDownKey, BuyUziKey, BuyAmmoKey, BuyGlockKey, BuyFoodKey, LockOnKey, ShootLockedKey, AimPart, CamPart, BlinkKey, AimMode = "F","X","T","P","K","L","U","R","G","B","Q","E","Torso","Torso","LeftShift","New";
-local WSvalue, JPvalue, CSvalue = 16, 37.5, 8   --SKIDDED FROM MIKOWARE!! HEHWGWGWGWHGEWRHEHHER I LOVE SKIDDING
-
 local Players, RService, RStorage, Uis, TweenService, TPService = game:GetService("Players"), game:GetService("RunService"), game:GetService("ReplicatedStorage"), game:GetService("UserInputService"), game:GetService("TweenService"), game:GetService("TeleportService");
 local LocalP, Mouse = Players.LocalPlayer, Players.LocalPlayer:GetMouse()
 local Chat, Mute, UD, UD2, Vec3, Vec2, INew, CordCamera, CF = RStorage.DefaultChatSystemChatEvents.SayMessageRequest, RStorage.DefaultChatSystemChatEvents.MutePlayerRequest, UDim.new, UDim2.new, Vector3.new, Vector2.new, Instance.new, workspace.CurrentCamera.CoordinateFrame, CFrame.new
@@ -23,6 +12,10 @@ local Keys = {
     ["W"] = false;["A"] = false;
     ["S"] = false;["D"] = false;
 }
+
+
+
+
 -- //Zetox V8 made by xaxa (zxciaz#5863) or (lilfatherfigure#5863) may change   -- HII XAXA
 -- //Uis 
 Uis.InputBegan:Connect(function(Key)
@@ -1113,7 +1106,22 @@ Press E to Repeat Shoot someone until they die (Press the "Aimbot" box first)
 Press Z to make gui go sho sho GO AWAY!!!
 Press C to go weset😿😿   GetChar:BreakJoints() --3ywtwtwt25r234g2 
 
-this is all a joke btw
+Command Bar '
+Blink
+Blinkspeed
+Nosit -- Ns
+Rejoin
+View
+Unview
+Camlock
+Uncamlock
+Esp
+Unesp
+
+TO TARGET A EMEMY TYPE THEIR DISPLAY NAME
+
+
+XAXA BE MY FRIEND
 
 XAXA BE MY FRIEND
 
@@ -1282,6 +1290,19 @@ local ViewTarget = nil;
 local CamlockTarget = nil;
 local Viewing = false;
 local Camlock = false;
+
+
+local Players, RStorage, RService, TPService, TweenService, HttpService, SGui = game:GetService("Players"),game:GetService("ReplicatedStorage"),game:GetService("RunService"),game:GetService("TeleportService"), game:GetService("TweenService"), game:GetService("HttpService"), game:GetService("StarterGui")
+local Client, Mouse = Players.LocalPlayer, Players.LocalPlayer:GetMouse();local LocalP = function() return Client.Character or Client.CharacterAdded:Wait() end
+local Camera, CordCamera, CurCamera = workspace.CurrentCamera, workspace.CurrentCamera.CoordinateFrame, workspace.CurrentCamera;
+local CF, UD, UD2, INew, Vec3, NColor3 = CFrame.new, UDim.new, UDim2.new, Instance.new, Vector3.new, Color3.fromRGB;
+local ClickCheck, M1Held, Keyheld, BToggle, CanShoot, SelectingTarget, ColorGlock, ColorShotty = false, false, false, false, false, false, false, false
+local Blink, FirstFly, Flying, Animating, Visualizing, Teleporting, Equipped, debounce, JumpingStateDebounce, RunSpeeding, Spying, Spamming = false, false, false, false, false, false, false, false, false, false, false, false, false
+local Infjump, Noclip, ItemEsp, Airwalk, Aimbot, Aimlock, Camlock, GlockFollowing, ShottyFollow CashFarming, TPBypass, Feloop, Noslow, Attacked, Flinging, AntiFe, FeVan = false, false, false, false, false, false, nil, false, false, false, false, false, false, false, false, false, false
+local FSpeed, BSpeed, TPSpeed, XSet, YSet, ZSet, OSet, X,Y,Z, x,y,z, AV, SpamDelay = 7, 3, 2, 88,77,66,5, 0, 0, 0, 0, 0, 0, 10, 2;local Legitmode = false
+local FlyKey, NoClipKey, TrashTalkKey, ResetKey, AVUpKey, AVDownKey, BuyUziKey, BuyAmmoKey, BuyGlockKey, BuyFoodKey, LockOnKey, ShootLockedKey, AimPart, CamPart, BlinkKey, AimMode = "F","X","T","P","K","L","U","R","G","B","Q","E","Torso","Torso","LeftShift","New";
+local WSvalue, JPvalue, CSvalue = 16, 37.5, 8   --SKIDDED FROM MIKOWARE!! HEHWGWGWGWHGEWRHEHHER I LOVE SKIDDING
+
 
 getgenv().SearchPlayers = function(Name)
     local Inserted = {}
